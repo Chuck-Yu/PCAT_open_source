@@ -46,6 +46,11 @@ RVizCloudAnnotation::RVizCloudAnnotation(ros::NodeHandle &nh1) : m_nh(nh1)
 
   m_log_file = param_stringO;
 
+  std::string param_string;
+  image_transport::ImageTransport imageTrans(*nh);
+  m_nh.param<std::string>(PARAM_IMAGE_TOPIC, param_string, PARAM_DEFAULT_IMAGE_TOPIC);
+  m_image_pub = imageTrans.advertise(param_string, 1);
+
   ROS_INFO("rviz_cloud_annotation: log file: %s", m_log_file.c_str());
   //根据以上路径创建文件夹
   mkdir(param_stringA.c_str(), S_IRWXU);
@@ -152,6 +157,7 @@ void RVizCloudAnnotation::onNew(const std_msgs::UInt32 &label_msg)
   {
     FILE_ID++;
     //加载新的一帧并开启标注
+
     InitNewCloud(*nh);
   }
 }
@@ -493,6 +499,20 @@ void RVizCloudAnnotation::InitNewCloud(ros::NodeHandle &nh)
   m_control_yaw_step = m_control_yaw_max;
 
   m_view_cloud = m_view_labels = m_view_control_points = true;
+
+  // Show image
+  std::string imagePath = m_image_files[FILE_ID];
+  cv::Mat image = cv::imread(imagePath.c_str(), CV_LOAD_IMAGE_COLOR);
+  if (image.empty())
+  {
+    std::cout << "open image error" << std::endl;
+  }
+  else
+  {
+    std::cout << "open image ok" << std::endl;
+  }
+  sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
+  m_image_pub.publish(msg);
 
   SendCloudMarker(true);
   SendControlPointMaxWeight();

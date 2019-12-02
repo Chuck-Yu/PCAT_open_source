@@ -177,6 +177,9 @@
 #define PARAM_IMAGE_LABEL_TOPIC "rviz_cloud_annotation/image_label_topic"
 #define PARAM_DEFAULT_IMAGE_LABEL_TOPIC "/rviz_cloud_annotation/image_label"
 
+#define PARAM_IMAGE_TOPIC "rviz_cloud_annotation/image_topic"
+#define PARAM_DEFAULT_IMAGE_TOPIC "/rviz_cloud_annotation/image"
+
 #define PARAM_AUTO_PLANE_TOPIC "rviz_cloud_annotation/auto_plane_topic"
 #define PARAM_DEFAULT_AUTO_PLANE_TOPIC "/rviz_cloud_annotation/auto_plane"
 

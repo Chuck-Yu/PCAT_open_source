@@ -408,6 +408,8 @@ private:
 
   ros::Publisher m_object_id_pub;
 
+  image_transport::Publisher m_image_pub;
+
   int32 m_control_yaw_step;
   int32 m_control_yaw_min;
   int32 m_control_yaw_max;
