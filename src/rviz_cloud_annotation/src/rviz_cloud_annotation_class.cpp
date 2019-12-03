@@ -157,7 +157,6 @@ void RVizCloudAnnotation::onNew(const std_msgs::UInt32 &label_msg)
   {
     FILE_ID++;
     //加载新的一帧并开启标注
-
     InitNewCloud(*nh);
   }
 }
